@@ -1,0 +1,45 @@
+;PUNTO 13 Y FUNCION DE SUMA GENERICA
+ 
+MAIN
+		MOV		R0, #5 ; A = 5
+		MOV		R1, #6 ; B = 6
+		MOV		R2, #4 ; C = 2
+		MOV		R3, #7 ; D = 4
+		MOV		R5, #10 ; Y = 10
+		BL		FUNCGEN
+		MOV		R4, R0 ; X = SUMA
+		ADD		R6, R4, R5 ; Z = X + Y
+		END
+ 
+		;		R1 < 100 y R1 > 20
+FUNC1	MOV		R0, #0
+		CMP		R1, #20
+		BLE		SALIDA1
+		CMP		R1, #100
+		BGE		SALIDA1
+		MOV		R0, #1
+SALIDA1	MOV		PC, LR
+ 
+		;		R1 < 100 o R2 > 20
+ 
+FUNC2	MOV		R0, #1
+		CMP		R1, #100
+		BLT		SALIDA1
+		CMP		R2, #20
+		BGT		SALIDA1
+		MOV		R0, #0
+SALIDA2	MOV		PC, LR
+ 
+		;		R1 = 10 o R1 = 15 o R1 = 20
+FUNCGEN	;SUB		SP, SP, #8 ; guardo 2 variables
+		;STR		R5, [SP, #4]
+		;STR		R4, [SP]
+		STMFD	SP!, {R4, R5}
+		ADD		R4, R0, R1
+		ADD		R5, R2, R3
+		SUB		R0, R4, R5
+		LDMFD	SP!, {R4, R5}
+		;LDR		R5, [SP, #4]
+		;LDR		R4, [SP]
+		;ADD		SP, SP, #8
+		MOV		PC, LR
