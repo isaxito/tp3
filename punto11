@@ -1,0 +1,16 @@
+        ;       Punto 11
+        
+VECT        DCB     'h', 'o', 'l', 'a', 0
+        
+        LDR     R0, =VECT
+        MOV     R1, #0
+        MOV     R2, #0
+        
+LOOP        CMP     R1, #4
+        BGE     LISTO
+        LDRB        R2, [R0]
+        ADD     R2, R2, #-32
+        STRB        R2, [R0], #1
+        ADD     R1, R1, #1
+        B       LOOP
+LISTO:
