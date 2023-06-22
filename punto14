@@ -1,0 +1,25 @@
+			;		funcion findNumber en ASM
+ 
+VECT			DCD		10, 32, 45, 22, 10, 11, 5, 7, 1
+ 
+			LDR		R0, =VECT ; R0 = array direccion base
+			MOV		R1, #9  ; R1 = size
+			MOV		R2, #11 ; R2 = number
+			BL		FINDNUMBER
+			END
+ 
+ 
+FINDNUMBER	STMFD	SP!, {R4}
+			MOV		R4, #0
+FORFN		CMP		R4, R1
+			BGE		RETURNFN
+			LDR		R3, [R0], #4
+			CMP		R3, R2
+			BEQ		RETURNFN
+			ADD		R4, R4, #1
+			B		FORFN
+ 
+ 
+RETURNFN		MOV		R0, R4
+			LDMFD	SP!, {R4}
+			MOV		PC, LR

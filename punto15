@@ -1,0 +1,25 @@
+string1	DCB		'a', 'h', 'r', 'e', 'e', 0
+string2	DCB		0, 0, 0, 0, 0
+		
+MAIN		LDR		R0, =string1
+		LDR		R1, =string2
+		BL		STRCPY
+		END
+		
+		
+		
+		;		R0= DST[], R1= SRC[]
+STRCPY	STMFD	SP!, {R4, R5}
+		
+		MOV		R4, #0
+LOOPCPY	LDRB		R3, [R0]
+		STRB		R3, [R1]
+		LDRB		R5, [R0, #1]
+		CMP		R5, #0
+		BEQ		SALIR
+		ADD		R0, R0, #1
+		ADD		R1, R1, #1
+		B		LOOPCPY
+		
+SALIR	LDMFD	SP!, {R4, R5}
+		MOV		PC, LR

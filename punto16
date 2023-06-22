@@ -1,0 +1,39 @@
+notasPrimero	DCD		10,8,5,5,9,10,8,2,7,2,1
+notasSegundo	DCD		4,6,5,3,8,9,10,1,3,1,1
+notasMayores	DCD		0,0,0,0,0,0,0,0,0,0,0
+			
+MAIN
+			LDR		R0, =notasPrimero
+			LDR		R1, =notasSegundo
+			LDR		R2, =notasMayores
+			MOV		R3, #11
+			
+			BL		notaMayor
+			
+			END
+			
+			
+			;		R0 = notasPrimero[], R1 = notasSegundo[], R2 = notasMayores[], R3 = size
+notaMayor		STMFD	SP!, {R4, R5, LR}
+			MOV		R4, R0
+			MOV		R5, R1
+LOOPNOTA		CMP		R3, #0
+			BEQ		SALGO
+			LDR		R0, [R4], #4
+			LDR		R1, [R5], #4
+			STMFD	SP!, {R2, R3}
+			BL		mayor
+			LDMFD	SP!, {R2,R3}
+			STR		R0, [R2], #4
+			SUB		R3, R3, #1
+			B		LOOPNOTA
+SALGO		LDMFD	SP!, {R4, R5, LR}
+			MOV		SP, LR
+			
+			
+			
+			
+mayor
+			CMP		R0, R1
+			MOVLT	R0, R1
+			MOV		PC, LR
